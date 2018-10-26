@@ -26,7 +26,7 @@ import useVisibilitySensor from "@rehooks/visibility-sensor";
 
 function MyComponent() {
   const rootNode = useRef(null);
-  const isVisible = useVisibilitySensor(rootNode, {
+  const { isVisible, visibilityRect } = useVisibilitySensor(rootNode, {
     intervalCheck: false,
     scrollCheck: true,
     resizeCheck: true
