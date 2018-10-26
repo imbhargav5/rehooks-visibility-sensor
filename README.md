@@ -9,6 +9,10 @@ It checks whether an element has scrolled into view or not. A lot of the logic i
 >
 > You'll need to install `react`, `react-dom`, etc at `^16.7.0-alpha.0`
 
+## Demo
+
+[![Image from Gyazo](https://i.gyazo.com/403fca2aa7fac37fe1bb4fe02b6c1c10.gif)](https://gyazo.com/403fca2aa7fac37fe1bb4fe02b6c1c10)
+
 ## Install
 
 ```sh

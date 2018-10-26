@@ -2,7 +2,7 @@
 // A lot of the logic is taken from his repo -> https://github.com/joshwnj/react-visibility-sensor
 // And is rewritten for hooks api
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useLayoutEffect } from "react";
 
 function normalizeRect(rect) {
   if (rect.width === undefined) {
@@ -16,9 +16,23 @@ function normalizeRect(rect) {
   return rect;
 }
 
+const initialState = { isVisible: null, visibilityRect: {} };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "set":
+      if (state.isVisible === action.payload.isVisible) {
+        return state;
+      }
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const DEFAULT_OPTIONS = {
   intervalCheck: false,
-  partialVisibility: true,
+  partialVisibility: false,
   containment: null,
   scrollCheck: false,
   scrollDebounce: 250,
@@ -31,6 +45,11 @@ const DEFAULT_OPTIONS = {
 };
 
 export default function(ref, opts) {
+  /*
+    Create local state
+  */
+  const [localState, dispatch] = useReducer(reducer, initialState);
+
   /*
     Get options
   */
@@ -51,12 +70,6 @@ export default function(ref, opts) {
   function getContainer() {
     return containment || window;
   }
-
-  /*
-    Create local state
-  */
-  const [isVisible, setIsVisible] = useState(null);
-  const [visibilityRect, setVisibilityRect] = useState({});
 
   /*
     Check visibility
@@ -116,32 +129,41 @@ export default function(ref, opts) {
         ? partialVisible && rect.top <= containmentRect.bottom - minTopValue
         : partialVisible;
     }
-    return isVisible;
+    return { isVisible, visibilityRect };
   }
 
   function updateIsVisible() {
-    const newIsVisible = checkVisibility();
-    if (newIsVisible !== isVisible) {
-      setIsVisible(newIsVisible);
-    }
+    const { isVisible, visibilityRect } = checkVisibility();
+    dispatch({
+      type: "set",
+      payload: { isVisible, visibilityRect }
+    });
   }
 
   // run only once, hence empty array as second argument
   useEffect(() => {
-    shouldCheckOnMount && updateIsVisible();
+    if (shouldCheckOnMount) {
+      updateIsVisible();
+    }
   }, []);
 
   // If interval check is needed
-  useEffect(() => {
-    if (intervalCheck && intervalCheck > 0) {
-      const intervalTimer = setInterval(updateIsVisible, intervalCheck);
-      return () => {
-        clearInterval(intervalTimer);
-      };
-    }
-  });
+  useEffect(
+    () => {
+      if (intervalCheck && intervalCheck > 0) {
+        const intervalTimer = setInterval(() => {
+          updateIsVisible();
+        }, intervalCheck);
+        return () => {
+          clearInterval(intervalTimer);
+        };
+      }
+    },
+    [intervalCheck]
+  );
 
-  function createListener(debounce, throttle) {
+  function createListener(event, debounce, throttle) {
+    const container = getContainer();
     let timeout;
     let listener;
     const later = () => {
@@ -160,44 +182,26 @@ export default function(ref, opts) {
         timeout = setTimeout(later, debounce || 0);
       };
     }
-    return {
-      listener,
-      timeout
+    container.addEventListener(event, listener);
+    return () => {
+      clearTimeout(timeout);
+      container.removeEventListener(event, listener);
     };
   }
 
   // If scroll check is needed
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollCheck) {
-      const { listener, timeout } = createListener(
-        scrollDebounce,
-        scrollThrottle
-      );
-      const container = getContainer();
-      container.addEventListener("scroll", listener);
-      return () => {
-        clearTimeout(timeout);
-        container.removeEventListener("scroll", listener);
-      };
+      return createListener("scroll", scrollDebounce, scrollThrottle);
     }
   }, []);
 
   // if resize check is needed
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (resizeCheck) {
-      const { listener, timeout } = createListener(
-        resizeDebounce,
-        resizeThrottle
-      );
-      const container = getContainer();
-      container.addEventListener("resize", listener);
-      return () => {
-        clearTimeout(timeout);
-        container.removeEventListener("resize", listener);
-      };
+      return createListener("resize", resizeDebounce, resizeThrottle);
     }
   }, []);
-
-  return isVisible;
+  return localState;
 }
