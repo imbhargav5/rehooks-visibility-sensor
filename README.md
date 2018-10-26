@@ -41,6 +41,8 @@ function MyComponent() {
 }
 ```
 
+## Status: Yet to be published to npm
+
 ## Todo
 
 - [x] Init
