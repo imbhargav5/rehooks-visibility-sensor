@@ -21,6 +21,7 @@ yarn add @rehooks/visibility-sensor
 import useVisibilitySensor from "@rehooks/visibility-sensor";
 
 function MyComponent() {
+  const rootNode = useRef(null);
   const isVisible = useVisibilitySensor(rootNode, {
     intervalCheck: false,
     scrollCheck: true,
@@ -28,7 +29,7 @@ function MyComponent() {
   });
   // value == ...
   return (
-    <div>
+    <div ref={rootNode}>
       <p>
         {isVisible ? "Visible" : isVisible === null ? "Null" : "Not Visible"}
       </p>
