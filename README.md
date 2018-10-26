@@ -37,3 +37,13 @@ function MyComponent() {
   );
 }
 ```
+
+## Todo
+
+- [x] Init
+- [x] Scroll and Resize support
+- [x] Debounce and throttling
+- [x] Option to opt-out of initial check on mount
+- [ ] Documentation of all options _ WIP _
+- [ ] More examples _ WIP _
+- [ ] Tests _ WIP _
