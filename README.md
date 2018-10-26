@@ -31,7 +31,6 @@ function MyComponent() {
     scrollCheck: true,
     resizeCheck: true
   });
-  // value == ...
   return (
     <div ref={rootNode}>
       <p>
