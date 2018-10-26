@@ -1,0 +1,5 @@
+interface useVisibilitySensor {
+  // ...
+}
+
+declare export default function useVisibilitySensor(): useVisibilitySensor;
