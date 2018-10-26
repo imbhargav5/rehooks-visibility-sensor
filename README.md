@@ -11,7 +11,7 @@ It checks whether an element has scrolled into view or not. A lot of the logic i
 
 ## Demo
 
-[![Image from Gyazo](https://i.gyazo.com/403fca2aa7fac37fe1bb4fe02b6c1c10.gif)](https://gyazo.com/403fca2aa7fac37fe1bb4fe02b6c1c10)
+[![Image from Gyazo](https://i.gyazo.com/98634bb2a962733670d798d1e754d63e.gif)](https://gyazo.com/98634bb2a962733670d798d1e754d63e)
 
 ## Install
 
