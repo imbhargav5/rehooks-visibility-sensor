@@ -11,7 +11,6 @@ function Example() {
     resizeCheck: true
   });
   const [count, setCount] = useState(0);
-  console.log({ isVisible });
   return (
     <div ref={rootNode} style={{ border: "1px dashed black" }}>
       <p>You clicked {count} times</p>

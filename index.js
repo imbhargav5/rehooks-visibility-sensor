@@ -1,3 +1,7 @@
+// Massive respect for Josh Johnston
+// A lot of the logic is taken from his repo -> https://github.com/joshwnj/react-visibility-sensor
+// And is rewritten for hooks api
+
 import { useEffect, useState } from "react";
 
 function normalizeRect(rect) {
