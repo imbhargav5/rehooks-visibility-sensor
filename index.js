@@ -34,7 +34,7 @@ const DEFAULT_OPTIONS = {
   intervalCheck: false,
   partialVisibility: false,
   containment: null,
-  scrollCheck: false,
+  scrollCheck: true,
   scrollDebounce: 250,
   scrollThrottle: -1,
   resizeCheck: false,
