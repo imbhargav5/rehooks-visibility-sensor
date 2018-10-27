@@ -73,6 +73,6 @@ The first argument of the `useVisibilitySensor` hook is a ref, the second argume
 - [x] Scroll and Resize support
 - [x] Debounce and throttling
 - [x] Option to opt-out of initial check on mount
-- [ ] Documentation of all options
+- [x] Documentation of all options
 - [x] Tests _ WIP _
 - [ ] More examples _ WIP _
