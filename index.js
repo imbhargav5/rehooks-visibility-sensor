@@ -2,7 +2,7 @@
 // A lot of the logic is taken from his repo -> https://github.com/joshwnj/react-visibility-sensor
 // And is rewritten for hooks api
 
-import { useEffect, useReducer, useLayoutEffect } from "react";
+let { useEffect, useReducer, useLayoutEffect } = require("react");
 
 function normalizeRect(rect) {
   if (rect.width === undefined) {
@@ -44,7 +44,7 @@ const DEFAULT_OPTIONS = {
   minTopValue: 0
 };
 
-export default function(ref, opts) {
+function useVisbilitySensor(ref, opts) {
   /*
     Create local state
   */
@@ -205,3 +205,4 @@ export default function(ref, opts) {
   }, []);
   return localState;
 }
+module.exports = useVisbilitySensor;

@@ -1,6 +1,6 @@
 "use strict";
 let test = require("ava");
-let { createElement: h } = require("react");
+let { createElement: h, useRef } = require("react");
 let ReactTestRenderer = require("react-test-renderer");
 let useVisibilitySensor = require("./");
 
@@ -8,13 +8,18 @@ function render(val) {
   return ReactTestRenderer.create(val);
 }
 
-test(t => {
+test("returns value of the right structure", t => {
   function Component() {
-    let value = useVisibilitySensor();
-    return h("div");
+    let rootRef = useRef(null);
+    let value = useVisibilitySensor(rootRef);
+    return h("div", {
+      ref: rootRef,
+      ...value
+    });
   }
 
-  let input = render(h(Component));
+  let element = render(h(Component));
 
-  t.is(input.toJSON().props.value, "...");
+  t.is(element.toJSON().props.isVisible, null);
+  t.deepEqual(element.toJSON().props.visibilityRect, {});
 });
