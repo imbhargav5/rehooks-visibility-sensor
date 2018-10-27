@@ -31,7 +31,6 @@ function MyComponent() {
     scrollCheck: true,
     resizeCheck: true
   });
-  // value == ...
   return (
     <div ref={rootNode}>
       <p>
@@ -66,6 +65,8 @@ The first argument of the `useVisibilitySensor` hook is a ref, the second argume
 `shouldCheckOnMount: true` - A `bool` which determines whether an initial check on first render should happen or not.
 
 `minTopValue: 0` - An `int` top value to determine what amount of top visibility should be considered for `visibility`
+
+## Status: Yet to be published to npm
 
 ## Todo
 
