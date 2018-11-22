@@ -1,4 +1,4 @@
-# `@rehooks/visibility-sensor`
+# `@rehooks/visibility-sensor` *DEPRECATED. Moved to [@rooks/use-visibility-sensor](https://github.com/react-hooks-org/rooks/tree/master/packages/visibility-sensor)*
 
 > React hook for visibility sensing a ref
 
